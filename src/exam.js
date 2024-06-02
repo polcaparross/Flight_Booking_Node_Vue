@@ -54,7 +54,39 @@ const Vueling = {
 
 // TODO
 
-// const flightsServer = ...
+const flightsServer = {
+  provs: [AirEuropa, Delta, Ryanair, Vueling],
+  actualInt: 0,
+  getFilteredFlights: function(min, max){
+    let allFlights=  []
+    return new Promise((resolve, reject) => {
+      let promises = this.provs.map((el) => {
+        return new Promise((resolve, reject) =>{
+          let timeout = setTimeout(() =>{
+            reject()
+          },500)
+
+          el.getFlights()
+          .then((el) =>{
+            clearTimeout(timeout)
+            el.forEach((flight) =>{
+              allFlights.push(flight)
+            })
+            resolve()
+          })
+            .catch((el)=> {
+              clearTimeout(timeout)
+              reject()
+            })
+          })
+        })
+
+      })
+    })
+  
+  },
+
+}
 
 
 //== Web Server ==============================================================
