@@ -72,7 +72,7 @@ const flightsServer = {
               clearTimeout(timeout);
               reject();
             });
-        })
+        }) 
           .then((flights) => {
             allFlights = allFlights.concat(flights);
           })
